@@ -32,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
         if (SDK_INT >17){
             getWindow().peekDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
-
+/*
         dbHandler dbHandler = new dbHandler(this);
         dbHandler.open();
         Toast.makeText(getApplicationContext(),dbHandler.displayEducation(1),Toast.LENGTH_LONG).show();
         dbHandler.close();
-
+*/
         bottomNavigationView = findViewById(R.id.bottomnavigation);
 
         Menu menu = bottomNavigationView.getMenu();
