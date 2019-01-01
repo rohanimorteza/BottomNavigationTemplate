@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/crd_listedu"
+    app:cardElevation="5dp"
+    android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_margin="15dp"
+                android:layout_weight=".7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="نام"
+                android:textSize="18dp"
+                android:fontFamily="@font/yekan"
+                android:id="@+id/txt_listcrs_name"/>
+
+            <TextView
+                android:fontFamily="@font/yekan"
+                android:layout_margin="15dp"
+                android:layout_weight=".3"
+                android:layout_width="0dp"
+                android:textSize="18dp"
+                android:layout_height="wrap_content"
+                android:text="نام دوره : " />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_margin="15dp"
+                android:layout_weight=".7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="مبلغ"
+                android:textSize="18dp"
+                android:gravity="right"
+                android:fontFamily="@font/yekan"
+                android:id="@+id/txt_listcrs_tuition"/>
+
+            <TextView
+
+                android:fontFamily="@font/yekan"
+                android:layout_margin="15dp"
+                android:layout_weight=".3"
+                android:layout_width="0dp"
+                android:gravity="right"
+                android:textSize="18dp"
+                android:layout_height="wrap_content"
+                android:text="شهریه  : " />
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
