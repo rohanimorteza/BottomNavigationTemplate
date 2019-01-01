@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:layout_margin="20dp"
-    android:background="@drawable/shape_user">
+    android:background="@drawable/shape_user"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</RelativeLayout>
+
+    <EditText
+        android:layout_marginTop="25dp"
+        android:id="@+id/edt_new_name"
+        android:fontFamily="@font/yekan"
+        android:background="@drawable/shape_edittext"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:layout_marginTop="25dp"
+        android:id="@+id/spn_new_educate"
+        android:background="@drawable/shape_edittext"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+
+
+    <LinearLayout
+        android:id="@+id/lin_newuser_img"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_edittext"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/yekan"
+            android:text="انتخاب تصویر"/>
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:id="@+id/img_new_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ico_std"/>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:background="@drawable/shape_user"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/btn_new_save"
+        android:fontFamily="@font/yekan"
+
+        android:textSize="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ذخیره"/>
+
+</LinearLayout>
