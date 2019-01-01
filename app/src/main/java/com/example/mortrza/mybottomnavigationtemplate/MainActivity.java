@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFragment;
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.HomeFragment;
@@ -32,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
             getWindow().peekDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
 
+        dbHandler dbHandler = new dbHandler(this);
+        dbHandler.open();
+        Toast.makeText(getApplicationContext(),dbHandler.displayEducation(1),Toast.LENGTH_LONG).show();
+        dbHandler.close();
 
         bottomNavigationView = findViewById(R.id.bottomnavigation);
 
