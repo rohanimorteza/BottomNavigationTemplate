@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@mipmap/ico_homee"
+        android:title="خانه"/>
+
+    <item
+        android:id="@+id/navigation_new_user"
+        android:icon="@mipmap/ico_newuserr"
+        android:title="ثبت نام"/>
+
+
+    <item
+        android:id="@+id/navigation_definition"
+        android:icon="@mipmap/ico_definitionn"
+        android:title="تعاریف"/>
+
+
+</menu>
