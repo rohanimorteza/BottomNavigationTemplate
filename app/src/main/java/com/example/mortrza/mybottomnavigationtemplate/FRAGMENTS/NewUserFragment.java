@@ -1,15 +1,23 @@
 package com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static android.os.Build.VERSION.SDK_INT;
 
 
 public class NewUserFragment extends Fragment {
@@ -43,6 +52,7 @@ public class NewUserFragment extends Fragment {
     LinearLayout imgselect;
     byte[] imageInByte;
     BottomSheetDialog mBottomSheetDialog;
+    Context context;
 
 
     List<String> EducationNames = new ArrayList<>();
@@ -54,6 +64,7 @@ public class NewUserFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newuser,container,false);
 
+        context = getContext();
         setupView(view);
 
         return view;
@@ -164,8 +175,35 @@ public class NewUserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
-                Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,2);
+
+
+
+                if(SDK_INT>= Build.VERSION_CODES.M){
+                    if(ContextCompat.checkSelfPermission(getContext(),Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED){
+                        if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.CAMERA)){
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setCancelable(true);
+                            builder.setTitle("دسترسی به دوربین ؟؟؟");
+                            builder.setMessage("برای استفاده از دوربین، و گرفتن عکس از دانشجو برنامه به این دسترسی نیاز دارد.");
+                            builder.setPositiveButton("موافقم", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ActivityCompat.requestPermissions(getActivity(),new String[] {Manifest.permission.CAMERA},2);
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }else {
+                            ActivityCompat.requestPermissions(getActivity(),new String[] {Manifest.permission.CAMERA},2);
+                        }
+                    }else {
+                        //Toast.makeText(getApplicationContext(),"شما قبلا این دسترسی را تائید کرده اید.",Toast.LENGTH_LONG).show();
+                        mBottomSheetDialog.dismiss();
+                        Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent,2);
+                    }
+                }
 
             }
         });
@@ -206,4 +244,23 @@ public class NewUserFragment extends Fragment {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+            case 2 :
+                if(grantResults.length>=0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(getContext(),"تائید شد",Toast.LENGTH_LONG).show();
+                    Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent,2);
+                }else {
+                    Toast.makeText(getContext()," تائید نشد ",Toast.LENGTH_LONG).show();
+                    //finish();
+                }
+        }
+
+
+
+    }
 }
