@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +42,8 @@ public class NewUserFragment extends Fragment {
     EditText name;
     LinearLayout imgselect;
     byte[] imageInByte;
+    BottomSheetDialog mBottomSheetDialog;
+
 
     List<String> EducationNames = new ArrayList<>();
     List<String> EducationIDs  = new ArrayList<>();
@@ -66,8 +71,7 @@ public class NewUserFragment extends Fragment {
         imgselect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,1);
+                openBottomSheet(v);
 
             }
         });
@@ -142,6 +146,42 @@ public class NewUserFragment extends Fragment {
 
     }
 
+    public void openBottomSheet(View v){
+
+        View view = getLayoutInflater().inflate(R.layout.bottomsheet,null);
+        mBottomSheetDialog = new BottomSheetDialog(getContext());
+        mBottomSheetDialog.setContentView(view);
+        mBottomSheetDialog.setCancelable(true);
+        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+        mBottomSheetDialog.show();
+
+        CardView camera,Gallery;
+        camera = view.findViewById(R.id.crd_bs_camera);
+        Gallery = view.findViewById(R.id.crd_bs_gallery);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,2);
+
+            }
+        });
+
+        Gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                Intent intent  = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,1);
+
+            }
+        });
+
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -155,6 +195,13 @@ public class NewUserFragment extends Fragment {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+
+        if(requestCode==2 && resultCode==RESULT_OK && data!=null ){
+
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            imgg.setImageBitmap(photo);
+
         }
 
     }
