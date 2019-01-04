@@ -1,6 +1,7 @@
 package com.example.mortrza.mybottomnavigationtemplate.ADAPTERS;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.mortrza.mybottomnavigationtemplate.DetailActivity;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Student;
 import com.example.mortrza.mybottomnavigationtemplate.R;
 
@@ -39,7 +41,7 @@ public class STDAdapter extends RecyclerView.Adapter<STDAdapter.STDViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull STDViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull STDViewHolder holder, final int position) {
 
         holder.name.setText(studentList.get(position).getName());
 
@@ -47,6 +49,15 @@ public class STDAdapter extends RecyclerView.Adapter<STDAdapter.STDViewHolder> {
         byte[] p = studentList.get(position).getImg();
         Bitmap bm = BitmapFactory.decodeByteArray(p,0,p.length);
         holder.img.setImageBitmap(bm);
+
+        holder.crd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context,DetailActivity.class);
+                i.putExtra("ID",studentList.get(position).getId());
+                context.startActivity(i);
+            }
+        });
 
 
 

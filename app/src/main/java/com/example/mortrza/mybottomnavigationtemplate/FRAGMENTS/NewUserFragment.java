@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -23,6 +24,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodSubtype;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,6 +41,7 @@ import com.example.mortrza.mybottomnavigationtemplate.dbHandler;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.Build.VERSION.SDK_INT;
@@ -89,7 +93,6 @@ public class NewUserFragment extends Fragment {
 
 
         setupSpinner();
-
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -144,6 +147,10 @@ public class NewUserFragment extends Fragment {
 
     public void setupSpinner(){
 
+       // EducationNames.add("لطفا لطفا");
+       // EducationIDs.add("0");
+
+
         dbHandler dbh = new dbHandler(getContext());
         dbh.open();
         for(int i=0;i<dbh.displayEducationCount();i++){
@@ -153,6 +160,7 @@ public class NewUserFragment extends Fragment {
         }
         dbh.close();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,EducationNames);
+
         spinner.setAdapter(adapter);
 
     }

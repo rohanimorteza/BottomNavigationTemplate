@@ -25,6 +25,7 @@ public class dbHandler extends SQLiteOpenHelper {
     private static String TBL_UNIT="tbl_units";
     private static String TBL_STD="tbl_student";
     private static String TBL_CRS="tbl_course";
+    private static String TBL_EDU="tbl_education";
     Context cntx;
     SQLiteDatabase db;
 
@@ -128,6 +129,22 @@ public class dbHandler extends SQLiteOpenHelper {
             StdList.add(std);
         }while (cursor.moveToNext());
         return StdList;
+    }
+
+
+    public Student displayStudent(String id){
+
+
+        Cursor cursor = db.rawQuery("SELECT id_student , name_student , pic , name_education FROM  "+ TBL_STD+" INNER JOIN "+ TBL_EDU +" on education = id_education where id_student="+id,null);
+        cursor.moveToFirst();
+
+            Student std = new Student();
+            std.setId(cursor.getString(0));
+            std.setName(cursor.getString(1));
+            std.setImg(cursor.getBlob(2));
+            std.setEducation(cursor.getString(3));
+
+        return std;
     }
 
     public List<Course> displayCourse(){

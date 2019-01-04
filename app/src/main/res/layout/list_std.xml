@@ -16,9 +16,9 @@
         android:gravity="center">
 
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:id="@+id/img_liststd"
             android:src="@mipmap/ico_std"/>
         <TextView

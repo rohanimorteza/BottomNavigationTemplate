@@ -5,6 +5,8 @@ public class Student {
     private String id;
     private byte[] img;
     private String name;
+    private String education;
+
 
     public String getId() {
         return id;
@@ -28,5 +30,13 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
     }
 }
