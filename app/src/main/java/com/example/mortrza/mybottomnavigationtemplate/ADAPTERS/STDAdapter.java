@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.mortrza.mybottomnavigationtemplate.DetailActivity;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Student;
+import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.FragmentStudentDetail;
 import com.example.mortrza.mybottomnavigationtemplate.R;
 
 import java.util.List;
@@ -53,9 +57,23 @@ public class STDAdapter extends RecyclerView.Adapter<STDAdapter.STDViewHolder> {
         holder.crd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                FragmentStudentDetail fragmentStudentDetail = new FragmentStudentDetail();
+                Bundle b = new Bundle();
+                b.putString("ID",studentList.get(position).getId());
+                fragmentStudentDetail.setArguments(b);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentStudentDetail).addToBackStack(null).commit();
+
+
+                /*
                 Intent i = new Intent(context,DetailActivity.class);
                 i.putExtra("ID",studentList.get(position).getId());
                 context.startActivity(i);
+                */
             }
         });
 
