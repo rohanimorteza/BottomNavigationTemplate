@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgCRS;
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgEdu;
+import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgTRM;
 
 public class DefinitionActivity extends AppCompatActivity {
 
@@ -27,6 +28,11 @@ public class DefinitionActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.container,new DefFrgCRS());
+            transaction.commit();
+        }else if(b.get("FRG").toString().equals("TRM")){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.container,new DefFrgTRM());
             transaction.commit();
         }
 

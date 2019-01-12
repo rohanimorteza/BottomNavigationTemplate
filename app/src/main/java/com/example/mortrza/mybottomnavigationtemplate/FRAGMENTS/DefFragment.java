@@ -19,6 +19,7 @@ public class DefFragment extends Fragment {
 
     CardView crdEdu;
     CardView crdCourse;
+    CardView Term;
 
     @Nullable
     @Override
@@ -35,6 +36,7 @@ public class DefFragment extends Fragment {
 
         crdEdu = view.findViewById(R.id.crd_education);
         crdCourse = view.findViewById(R.id.crd_course);
+        Term = view.findViewById(R.id.crd_term);
 
         crdEdu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +52,15 @@ public class DefFragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(getContext(),DefinitionActivity.class);
                 i.putExtra("FRG","CRS");
+                startActivity(i);
+            }
+        });
+
+        Term.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(),DefinitionActivity.class);
+                i.putExtra("FRG","TRM");
                 startActivity(i);
             }
         });

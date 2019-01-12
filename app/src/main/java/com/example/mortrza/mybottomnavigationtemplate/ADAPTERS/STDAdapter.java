@@ -59,8 +59,6 @@ public class STDAdapter extends RecyclerView.Adapter<STDAdapter.STDViewHolder> {
             public void onClick(View v) {
 
 
-
-
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 FragmentStudentDetail fragmentStudentDetail = new FragmentStudentDetail();
                 Bundle b = new Bundle();
@@ -69,11 +67,11 @@ public class STDAdapter extends RecyclerView.Adapter<STDAdapter.STDViewHolder> {
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, fragmentStudentDetail).addToBackStack(null).commit();
 
 
-                /*
+/*
                 Intent i = new Intent(context,DetailActivity.class);
                 i.putExtra("ID",studentList.get(position).getId());
                 context.startActivity(i);
-                */
+*/
             }
         });
 

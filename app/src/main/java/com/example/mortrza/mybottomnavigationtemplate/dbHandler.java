@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Course;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Education;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Student;
+import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Term;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,6 +24,7 @@ public class dbHandler extends SQLiteOpenHelper {
     private static String DBNAME = "student.db";
     private static String DBPATH;
     private static String TBL_UNIT="tbl_units";
+    private static String TBL_TRM="tbl_term";
     private static String TBL_STD="tbl_student";
     private static String TBL_CRS="tbl_course";
     private static String TBL_EDU="tbl_education";
@@ -162,6 +164,21 @@ public class dbHandler extends SQLiteOpenHelper {
         return CRSList;
     }
 
+    public List<Term> displayTerm(){
+        Cursor cursor = db.rawQuery("SELECT * FROM  "+TBL_TRM,null);
+        cursor.moveToFirst();
+        List<Term> TRMList = new ArrayList<>();
+        do {
+            Term trm = new Term();
+            trm.setId(cursor.getString(0));
+            trm.setName(cursor.getString(1));
+            trm.setYear(cursor.getString(2));
+
+            TRMList.add(trm);
+        }while (cursor.moveToNext());
+        return TRMList;
+    }
+
     public List<Education> displayEducation(String a){
         Cursor cursor = db.rawQuery("SELECT * FROM  tbl_education where id_education<>1 and name_education like '"+a+"%'",null);
         cursor.moveToFirst();
@@ -207,6 +224,14 @@ public class dbHandler extends SQLiteOpenHelper {
         db.insert(TBL_CRS,"nameCrs",contentValues);
     }
 
+    public void insertTrm(String Name , String Year){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name_term",Name);
+        contentValues.put("year_term",Year);
+
+        db.insert(TBL_TRM,"name_term",contentValues);
+    }
+
 /*
     public List<Unit> displayUnits(String str){
         Cursor cursor = db.rawQuery("SELECT * FROM  "+TBL_UNIT+" where UnitName like '%"+str+"%'",null);
@@ -232,6 +257,13 @@ public class dbHandler extends SQLiteOpenHelper {
 
     public int displayCourseCount(){
         Cursor cursor = db.rawQuery("SELECT * FROM  "+ TBL_CRS,null);
+        cursor.moveToFirst();
+
+        return cursor.getCount();
+    }
+
+    public int displayTermCount(){
+        Cursor cursor = db.rawQuery("SELECT * FROM  "+ TBL_TRM,null);
         cursor.moveToFirst();
 
         return cursor.getCount();

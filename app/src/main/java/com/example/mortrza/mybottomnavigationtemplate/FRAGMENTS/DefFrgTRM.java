@@ -13,35 +13,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
 import com.example.mortrza.mybottomnavigationtemplate.ADAPTERS.CrsAdapter;
+import com.example.mortrza.mybottomnavigationtemplate.ADAPTERS.TrmAdapter;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Course;
-import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Education;
-
+import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Term;
 import com.example.mortrza.mybottomnavigationtemplate.R;
 import com.example.mortrza.mybottomnavigationtemplate.dbHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefFrgCRS extends Fragment {
+public class DefFrgTRM extends Fragment {
 
-    EditText CrsNameEdt,CrsTuitionEdt;
+    EditText TrmNameEdt,TrmYearEdt;
     ImageView addImg;
     RecyclerView recyclerView;
-    List<Education> EduList;
+    List<Term> TrmList;
     dbHandler dbh;
-
-
-
-
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_def_crs,container,false);
+        View view = inflater.inflate(R.layout.fragment_def_trm,container,false);
         setupView(view);
 
         return view;
@@ -50,17 +43,17 @@ public class DefFrgCRS extends Fragment {
     public void setupView(View view){
 
 
-        CrsNameEdt = view.findViewById(R.id.edt_def_name);
-        CrsTuitionEdt = view.findViewById(R.id.edt_def_tuition);
+        TrmNameEdt = view.findViewById(R.id.edt_deftrm_name);
+        TrmYearEdt = view.findViewById(R.id.edt_deftrm_year);
         addImg = view.findViewById(R.id.img_def_add);
-        recyclerView = view.findViewById(R.id.rec_def);
-        EduList =new ArrayList<>();
+        recyclerView = view.findViewById(R.id.rec_deftrm);
+        TrmList = new ArrayList<>();
 
         dbh = new dbHandler(getContext());
         dbh.open();
 
-        if(dbh.displayCourseCount()>0){
-            setupRecycler(dbh.displayCourse());
+        if(dbh.displayTermCount()>0){
+            setupRecycler(dbh.displayTerm());
         }
 
         dbh.close();
@@ -69,24 +62,24 @@ public class DefFrgCRS extends Fragment {
         addImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CrsTuitionEdt.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"شهریه را وارد کنید",Toast.LENGTH_LONG).show();
+                if (TrmYearEdt.getText().toString().equals("")){
+                    Toast.makeText(getContext(),"سال را وارد کنید",Toast.LENGTH_LONG).show();
                 }
-                if (CrsNameEdt.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"نام دوره را صحیح وارد کنید",Toast.LENGTH_LONG).show();
+                if (TrmNameEdt.getText().toString().equals("")){
+                    Toast.makeText(getContext(),"نام ترم را صحیح وارد کنید",Toast.LENGTH_LONG).show();
                 }
-                if (!CrsNameEdt.getText().toString().equals("") && !CrsTuitionEdt.getText().toString().equals("")) {
+                if (!TrmNameEdt.getText().toString().equals("") && !TrmYearEdt.getText().toString().equals("")) {
 
                     dbHandler dbh = new dbHandler(getContext());
                     dbh.open();
-                    dbh.insertCrs(CrsNameEdt.getText().toString(), CrsTuitionEdt.getText().toString());
-                    CrsNameEdt.getText().clear();
-                    CrsTuitionEdt.getText().clear();
+                    dbh.insertTrm(TrmNameEdt.getText().toString(), TrmYearEdt.getText().toString());
+                    TrmNameEdt.getText().clear();
+                    TrmYearEdt.getText().clear();
                     dbh.close();
 
                     dbh = new dbHandler(getContext());
                     dbh.open();
-                    setupRecycler(dbh.displayCourse());
+                    setupRecycler(dbh.displayTerm());
                     dbh.close();
 
 
@@ -99,12 +92,12 @@ public class DefFrgCRS extends Fragment {
 
     }
 
-    public  void  setupRecycler(List<Course> CourseList){
+    public  void  setupRecycler(List<Term> TermList){
 
-        if(CourseList.size()>0){
-            CrsAdapter crsAdapter = new CrsAdapter(getContext(),CourseList);
+        if(TermList.size()>0){
+            TrmAdapter trmAdapter = new TrmAdapter(getContext(),TermList);
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-            recyclerView.setAdapter(crsAdapter);
+            recyclerView.setAdapter(trmAdapter);
         }else{
             recyclerView.setAdapter(null);
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
 
+    android:orientation="vertical"
     android:background="@drawable/shape_def"
     android:layout_margin="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,6 +36,8 @@
                     android:src="@mipmap/ico_educationn"/>
 
                 <TextView
+                    android:fontFamily="@font/yekan"
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="تحصیلات"
@@ -64,6 +67,8 @@
                     android:src="@mipmap/ico_book"/>
 
                 <TextView
+                    android:fontFamily="@font/yekan"
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="دوره"
@@ -75,8 +80,49 @@
 
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal">
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/crd_term"
+            app:cardElevation="5dp"
+            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ico_term"/>
+
+                <TextView
+                    android:fontFamily="@font/yekan"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ترم"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
 
 
 
-</RelativeLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>
