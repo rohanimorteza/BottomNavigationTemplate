@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/shape_home">
-
-
 
     <android.support.v7.widget.CardView
         android:id="@+id/crd_detail"
@@ -68,7 +67,19 @@
 
 
     </android.support.v7.widget.CardView>
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:id="@+id/tabs_in_detail_std_frg">
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/vp_in_detail_std_frg"/>
 
 
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

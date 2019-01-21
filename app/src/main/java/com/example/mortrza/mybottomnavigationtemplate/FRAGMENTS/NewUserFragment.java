@@ -45,6 +45,7 @@ import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 import static android.os.Build.VERSION.SDK_INT;
+import static com.example.mortrza.mybottomnavigationtemplate.dbHandler.TBL_EDU;
 
 
 public class NewUserFragment extends Fragment {
@@ -153,7 +154,7 @@ public class NewUserFragment extends Fragment {
 
         dbHandler dbh = new dbHandler(getContext());
         dbh.open();
-        for(int i=0;i<dbh.displayEducationCount();i++){
+        for(int i=0;i<dbh.displayRowCount(TBL_EDU);i++){
             EducationNames.add(dbh.displayEducation(i+1));
             EducationIDs.add(i+1+"");
 

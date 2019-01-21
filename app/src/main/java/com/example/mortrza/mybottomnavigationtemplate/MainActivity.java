@@ -21,7 +21,8 @@ import static android.os.Build.VERSION.SDK_INT;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView ;
-
+    public static String Flag_called_from_crsfrg="-";
+    public static String Flag_called_from_stdDetail_frg="-";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

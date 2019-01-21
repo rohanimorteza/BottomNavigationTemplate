@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Course;
@@ -16,6 +17,9 @@ import com.example.mortrza.mybottomnavigationtemplate.R;
 
 import java.text.DecimalFormat;
 import java.util.List;
+
+import static com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.FragmentStudentDetail.SelectCrs;
+import static com.example.mortrza.mybottomnavigationtemplate.MainActivity.Flag_called_from_stdDetail_frg;
 
 public class CrsAdapter extends RecyclerView.Adapter<CrsAdapter.CRSViewHolder> {
 
@@ -38,7 +42,7 @@ public class CrsAdapter extends RecyclerView.Adapter<CrsAdapter.CRSViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CRSViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CRSViewHolder holder, final int position) {
 
         holder.name.setText(CRSlist.get(position).getCourseName());
         //holder.tuition.setText(formatter.format(Integer.parseInt(CRSlist.get(position).getCourseTuition())));
@@ -48,6 +52,19 @@ public class CrsAdapter extends RecyclerView.Adapter<CrsAdapter.CRSViewHolder> {
         holder.tuition.setText(formatter.format(Integer.parseInt(CRSlist.get(position).getCourseTuition())));
         final Typeface tf_yekan = Typeface.createFromAsset(context.getAssets(),"byekan.ttf");
         holder.tuition.setTypeface(tf_yekan);
+
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!Flag_called_from_stdDetail_frg.equals("-")){
+                    SelectCrs(CRSlist.get(position).getId());
+                }else{
+                    Toast.makeText(context,"called from def",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
 
     }
 

@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Course;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Education;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Student;
+import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Teacher;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Term;
 
 import java.io.File;
@@ -23,11 +24,13 @@ public class dbHandler extends SQLiteOpenHelper {
 
     private static String DBNAME = "student.db";
     private static String DBPATH;
-    private static String TBL_UNIT="tbl_units";
-    private static String TBL_TRM="tbl_term";
-    private static String TBL_STD="tbl_student";
-    private static String TBL_CRS="tbl_course";
-    private static String TBL_EDU="tbl_education";
+    public static String TBL_UNIT="tbl_units";
+    public static String TBL_TRM="tbl_term";
+    public static String TBL_TCH="tbl_teacher";
+    public static String TBL_STD="tbl_student";
+    public static String TBL_CRS="tbl_course";
+    public static String TBL_EDU="tbl_education";
+    public static String TBL_STD_J_CRS="tbl_std_join_crs";
     Context cntx;
     SQLiteDatabase db;
 
@@ -104,6 +107,13 @@ public class dbHandler extends SQLiteOpenHelper {
 
     }
 
+    public String displayTeacher(int id){
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TBL_TCH+" where id="+id,null);
+        cursor.moveToFirst();
+        return cursor.getString(1);
+    }
+
+
     public List<Education> displayEducation(){
         Cursor cursor = db.rawQuery("SELECT * FROM  tbl_education ",null);
         cursor.moveToFirst();
@@ -116,6 +126,20 @@ public class dbHandler extends SQLiteOpenHelper {
             EduList.add(edu);
         }
         return EduList;
+    }
+
+    public List<Teacher> displayTeacher(){
+        Cursor cursor = db.rawQuery("SELECT * FROM  "+TBL_TCH,null);
+        cursor.moveToFirst();
+        List<Teacher> TchList = new ArrayList<>();
+        while (cursor.moveToNext()){
+            Teacher tch = new Teacher();
+            tch.setId(cursor.getString(0));
+            tch.setName(cursor.getString(1));
+
+            TchList.add(tch);
+        }
+        return TchList;
     }
 
     public List<Student> displayStudent(){
@@ -193,21 +217,22 @@ public class dbHandler extends SQLiteOpenHelper {
         return EduList;
     }
 
-
-
-
-    public int DisplayEduCount(String a){
-        Cursor cursor = db.rawQuery("SELECT * FROM  tbl_education where  id_education<>1 and  name_education like '"+a+"%'",null);
+    public List<Teacher> displayTeacher(String a){
+        Cursor cursor = db.rawQuery("SELECT * FROM  tbl_teacher where id<>1 and name_teacher like '"+a+"%'",null);
         cursor.moveToFirst();
-        return cursor.getCount();
+        List<Teacher> TchList = new ArrayList<>();
+        do {
+            Teacher tch = new Teacher();
+            tch.setId(cursor.getString(0));
+            tch.setName(cursor.getString(1));
+
+            TchList.add(tch);
+        }while (cursor.moveToNext());
+        return TchList;
     }
 
 
-    public int DisplaySTDCount(){
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TBL_STD,null);
-        cursor.moveToFirst();
-        return cursor.getCount();
-    }
+
 
     public void insertEducation(String a){
         ContentValues contentValues = new ContentValues();
@@ -216,10 +241,27 @@ public class dbHandler extends SQLiteOpenHelper {
         db.insert("tbl_education","name_education",contentValues);
     }
 
-    public void insertCrs(String Name , String Tuition){
+    public void insertTeacher(String a){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name_teacher",a);
+
+        db.insert(TBL_TCH,"name_teacher",contentValues);
+    }
+
+    public void insertCrsToStd(String idStd,String idCrs){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id_std_std_j_crs",idStd);
+        contentValues.put("id_crs_std_j_crs",idCrs);
+
+        db.insert(TBL_STD_J_CRS,"namid_std_std_j_crse_teacher",contentValues);
+    }
+
+    public void insertCrs(String Name , String Tuition , String tchID,String termid){
         ContentValues contentValues = new ContentValues();
         contentValues.put("nameCrs",Name);
         contentValues.put("crsFee",Tuition);
+        contentValues.put("id_teacher",tchID);
+        contentValues.put("id_crsterm",termid);
 
         db.insert(TBL_CRS,"nameCrs",contentValues);
     }
@@ -232,40 +274,23 @@ public class dbHandler extends SQLiteOpenHelper {
         db.insert(TBL_TRM,"name_term",contentValues);
     }
 
-/*
-    public List<Unit> displayUnits(String str){
-        Cursor cursor = db.rawQuery("SELECT * FROM  "+TBL_UNIT+" where UnitName like '%"+str+"%'",null);
-        cursor.moveToFirst();
-        List<Unit> UnitList = new ArrayList<>();
-        do{
-            Unit unit = new Unit();
-            unit.setId(cursor.getString(0));
-            unit.setUnitName(cursor.getString(1));
 
-            UnitList.add(unit);
-        }while (cursor.moveToNext());
-        return UnitList;
-    }
-*/
-    public int displayEducationCount(){
-        Cursor cursor = db.rawQuery("SELECT * FROM  tbl_education ",null);
+    public int displayRowCount(String Table){
+        Cursor cursor = db.rawQuery("SELECT * FROM  "+ Table,null);
         cursor.moveToFirst();
-
         return cursor.getCount();
     }
 
 
-    public int displayCourseCount(){
-        Cursor cursor = db.rawQuery("SELECT * FROM  "+ TBL_CRS,null);
+    public int DisplayEduCount(String a){
+        Cursor cursor = db.rawQuery("SELECT * FROM  tbl_education where  id_education<>1 and  name_education like '"+a+"%'",null);
         cursor.moveToFirst();
-
         return cursor.getCount();
     }
 
-    public int displayTermCount(){
-        Cursor cursor = db.rawQuery("SELECT * FROM  "+ TBL_TRM,null);
+    public int DisplayTchCount(String a){
+        Cursor cursor = db.rawQuery("SELECT * FROM  tbl_teacher where  id<>1 and  name_teacher like '"+a+"%'",null);
         cursor.moveToFirst();
-
         return cursor.getCount();
     }
 

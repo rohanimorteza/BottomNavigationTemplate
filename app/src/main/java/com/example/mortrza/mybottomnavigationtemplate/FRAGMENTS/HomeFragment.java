@@ -15,6 +15,8 @@ import com.example.mortrza.mybottomnavigationtemplate.ADAPTERS.STDAdapter;
 import com.example.mortrza.mybottomnavigationtemplate.R;
 import com.example.mortrza.mybottomnavigationtemplate.dbHandler;
 
+import static com.example.mortrza.mybottomnavigationtemplate.dbHandler.TBL_STD;
+
 
 public class HomeFragment extends Fragment {
 
@@ -37,7 +39,7 @@ public class HomeFragment extends Fragment {
         dbHandler dbh = new dbHandler(getContext());
         dbh.open();
 
-        if(dbh.DisplaySTDCount()>0){
+        if(dbh.displayRowCount(TBL_STD)>0){
             nostd = view.findViewById(R.id.txt_home);
             nostd.setVisibility(View.INVISIBLE);
             recyclerView = view.findViewById(R.id.rec_home);

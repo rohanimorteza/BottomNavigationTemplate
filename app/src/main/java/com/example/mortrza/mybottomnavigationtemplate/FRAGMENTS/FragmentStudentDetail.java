@@ -1,23 +1,21 @@
 package com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,17 +25,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mortrza.mybottomnavigationtemplate.ADAPTERS.CrsAdapter;
+import com.example.mortrza.mybottomnavigationtemplate.ADAPTERS.TabViewPagerAdapter;
+import com.example.mortrza.mybottomnavigationtemplate.ADAPTERS.TrmAdapter;
 import com.example.mortrza.mybottomnavigationtemplate.ENCAP.Student;
 import com.example.mortrza.mybottomnavigationtemplate.R;
 import com.example.mortrza.mybottomnavigationtemplate.dbHandler;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static com.example.mortrza.mybottomnavigationtemplate.MainActivity.Flag_called_from_stdDetail_frg;
+import static com.example.mortrza.mybottomnavigationtemplate.dbHandler.TBL_CRS;
 
 public class FragmentStudentDetail extends Fragment {
 
+    static Dialog dialog;
+    static String CrsId;
     ImageView stdimg;
     Student student;
     TextView name,edu;
+    static Context c;
+    static String stdId;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+
+
     FloatingActionButton setting;
     BottomSheetDialog mBottomSheetDialog;
 
@@ -47,6 +57,7 @@ public class FragmentStudentDetail extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_std_detail,container,false);
         //Toast.makeText(getContext(),getArguments().get("ID").toString(),Toast.LENGTH_SHORT).show();
+        c = getContext();
         setupView(view);
         return view;
     }
@@ -58,11 +69,24 @@ public class FragmentStudentDetail extends Fragment {
         edu = view.findViewById(R.id.txt_frg_detail_edu);
         stdimg =  view.findViewById(R.id.img_frg_detail_avatar);
         setting = view.findViewById(R.id.fab_detail_std);
+        tabLayout = view.findViewById(R.id.tabs_in_detail_std_frg);
+        viewPager = view.findViewById(R.id.vp_in_detail_std_frg);
 
+        TabViewPagerAdapter adapter = new TabViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(new FragmentStudentDetailRegisteredTuition(),"پرداختی ها");
+        adapter.addFragment(new FragmentStudentDetailRegisteredCrs(),"دوره ها");
+
+
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
+        tabLayout.setupWithViewPager(viewPager);
+
+
+        stdId = getArguments().get("ID").toString();
 
         dbHandler dbh = new dbHandler(getContext());
         dbh.open();
-        student = dbh.displayStudent(getArguments().get("ID").toString());
+        student = dbh.displayStudent(stdId);
         dbh.close();
 
         byte[] p = student.getImg();
@@ -101,7 +125,16 @@ public class FragmentStudentDetail extends Fragment {
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
 
+                dbHandler dbHandler = new dbHandler(getContext());
+                dbHandler.open();
+                if(dbHandler.displayRowCount(TBL_CRS)>0){
+                    Flag_called_from_stdDetail_frg="1";
+                    selectCrs();
+                }else {
+                    Toast.makeText(getContext(),"لطفا از قسمت تعاریف دوره جدید تعریف نمایید.",Toast.LENGTH_SHORT).show();
+                }
 
+                dbHandler.close();
 
             }
         });
@@ -109,12 +142,49 @@ public class FragmentStudentDetail extends Fragment {
         payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Flag_called_from_stdDetail_frg="-";
                 mBottomSheetDialog.dismiss();
 
 
             }
         });
-
-
     }
+
+    public void selectCrs(){
+        View alertLayout = LayoutInflater.from(getContext()).inflate(R.layout.alert_select_term,null);
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setView(alertLayout);
+        refreshCrs(alertLayout);
+
+
+        //////////////////
+        dialog = alert.create();
+        dialog.show();
+    }
+    private void refreshCrs(View m){
+
+
+        final RecyclerView recyclerView = (RecyclerView) m.findViewById(R.id.rec_alert_select_term);
+
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        final dbHandler dbh = new dbHandler(getContext());
+        dbh.open();
+
+        CrsAdapter trmAdapter = new CrsAdapter(getContext(),dbh.displayCourse());
+        dbh.close();
+        recyclerView.setAdapter(trmAdapter);
+    }
+
+    public  static void SelectCrs(String id){
+
+        CrsId=id;
+        dbHandler dbh=new dbHandler(c);
+        dbh.open();
+        dbh.insertCrsToStd(stdId,CrsId);
+        dbh.close();
+        Flag_called_from_stdDetail_frg="-";
+        Toast.makeText(c,""+id,Toast.LENGTH_SHORT).show();
+        dialog.dismiss();
+    }
+
 }

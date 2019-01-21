@@ -31,8 +31,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@mipmap/ico_educationn"/>
 
                 <TextView
@@ -62,8 +62,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@mipmap/ico_book"/>
 
                 <TextView
@@ -102,8 +102,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@mipmap/ico_term"/>
 
                 <TextView
@@ -112,6 +112,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ترم"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/crd_teacher"
+            app:cardElevation="5dp"
+            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/ico_teacherr"/>
+
+                <TextView
+                    android:fontFamily="@font/yekan"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="استاد"
                     android:textAlignment="center"/>
 
             </LinearLayout>

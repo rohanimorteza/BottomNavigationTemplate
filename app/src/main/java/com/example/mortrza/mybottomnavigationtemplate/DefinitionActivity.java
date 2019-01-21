@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgCRS;
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgEdu;
+import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgTCH;
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgTRM;
 
 public class DefinitionActivity extends AppCompatActivity {
@@ -34,7 +35,11 @@ public class DefinitionActivity extends AppCompatActivity {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.container,new DefFrgTRM());
             transaction.commit();
+        }else if(b.get("FRG").toString().equals("TCH")){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.container,new DefFrgTCH());
+            transaction.commit();
         }
-
     }
 }
