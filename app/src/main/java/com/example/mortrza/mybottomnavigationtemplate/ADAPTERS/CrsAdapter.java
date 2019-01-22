@@ -44,12 +44,12 @@ public class CrsAdapter extends RecyclerView.Adapter<CrsAdapter.CRSViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CRSViewHolder holder, final int position) {
 
-        holder.name.setText(CRSlist.get(position).getCourseName());
-        //holder.tuition.setText(formatter.format(Integer.parseInt(CRSlist.get(position).getCourseTuition())));
+        holder.name.setText("نام دوره : "+CRSlist.get(position).getCourseName());
+
 
         formatter = new DecimalFormat("#,###,###,###");
 
-        holder.tuition.setText(formatter.format(Integer.parseInt(CRSlist.get(position).getCourseTuition())));
+        holder.tuition.setText("شهریه : "+formatter.format(Integer.parseInt(CRSlist.get(position).getCourseTuition())));
         final Typeface tf_yekan = Typeface.createFromAsset(context.getAssets(),"byekan.ttf");
         holder.tuition.setTypeface(tf_yekan);
 

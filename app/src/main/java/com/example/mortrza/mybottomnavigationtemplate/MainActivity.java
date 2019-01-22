@@ -55,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SDK_INT >17){
+            getWindow().peekDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        }
+    }
+
     public void selectFragment(MenuItem item){
         item.setChecked(true);
         int id = item.getItemId();

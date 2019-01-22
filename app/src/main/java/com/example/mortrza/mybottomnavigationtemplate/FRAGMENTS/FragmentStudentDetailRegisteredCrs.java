@@ -21,6 +21,7 @@ import com.example.mortrza.mybottomnavigationtemplate.dbHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.os.Build.VERSION.SDK_INT;
 import static com.example.mortrza.mybottomnavigationtemplate.MainActivity.Flag_called_from_crsfrg;
 import static com.example.mortrza.mybottomnavigationtemplate.dbHandler.TBL_CRS;
 import static com.example.mortrza.mybottomnavigationtemplate.dbHandler.TBL_TRM;
@@ -54,7 +55,6 @@ public class FragmentStudentDetailRegisteredCrs extends Fragment {
         }
 
         dbh.close();
-
 
     }
 

@@ -4,11 +4,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgCRS;
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgEdu;
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgTCH;
 import com.example.mortrza.mybottomnavigationtemplate.FRAGMENTS.DefFrgTRM;
+
+import static android.os.Build.VERSION.SDK_INT;
 
 public class DefinitionActivity extends AppCompatActivity {
 
