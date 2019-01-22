@@ -240,6 +240,18 @@ public class dbHandler extends SQLiteOpenHelper {
 
         db.insert("tbl_education","name_education",contentValues);
     }
+    public boolean CheckDuplicateEducation(String a){
+        Cursor cursor = db.rawQuery("SELECT name_education FROM  "+TBL_EDU+" where name_education like '"+a+"%'",null);
+        cursor.moveToFirst();
+        return cursor.isNull(0);
+    }
+
+    public boolean CheckDuplicateregisterdCrs(String idStd,String idCrs ){
+        Cursor cursor = db.rawQuery("SELECT id_id_std_j_crs FROM  "+TBL_STD_J_CRS+" where id_std_std_j_crs="+idStd+" and id_crs_std_j_crs="+idCrs,null);
+        cursor.moveToFirst();
+        return cursor.isNull(0);
+
+    }
 
     public void insertTeacher(String a){
         ContentValues contentValues = new ContentValues();

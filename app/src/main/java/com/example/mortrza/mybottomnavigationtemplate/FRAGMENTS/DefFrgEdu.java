@@ -90,14 +90,20 @@ public class DefFrgEdu extends Fragment {
 
                     dbHandler dbh =new dbHandler(getContext());
                     dbh.open();
-                    dbh.insertEducation(unitEdt.getText().toString());
+                    if(dbh.CheckDuplicateEducation(unitEdt.getText().toString())){
+                        dbh.insertEducation(unitEdt.getText().toString());
+                        Toast.makeText(getContext(),"ذخیره شد",Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(getContext(),"قبلا ثبت شده است.",Toast.LENGTH_LONG).show();
+                    }
+
 
                     unitEdt.getText().clear();
 
                     dbh.open();
                     setupRecycler(dbh.displayEducation());
                     dbh.close();
-                    Toast.makeText(getContext(),"ذخیره شد",Toast.LENGTH_LONG).show();
+
                     unitEdt.getText().clear();
                     dbh.close();
                 }

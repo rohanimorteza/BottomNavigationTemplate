@@ -180,10 +180,16 @@ public class FragmentStudentDetail extends Fragment {
         CrsId=id;
         dbHandler dbh=new dbHandler(c);
         dbh.open();
-        dbh.insertCrsToStd(stdId,CrsId);
+        if(dbh.CheckDuplicateregisterdCrs(stdId,CrsId)){
+            dbh.insertCrsToStd(stdId,CrsId);
+            Toast.makeText(c,"ثبت نام انجام شد",Toast.LENGTH_SHORT).show();
+
+        }else {
+            Toast.makeText(c,"قبلا در این دوره ثبت نام شده",Toast.LENGTH_SHORT).show();
+        }
+
         dbh.close();
         Flag_called_from_stdDetail_frg="-";
-        Toast.makeText(c,""+id,Toast.LENGTH_SHORT).show();
         dialog.dismiss();
     }
 
