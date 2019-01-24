@@ -188,6 +188,22 @@ public class dbHandler extends SQLiteOpenHelper {
         return CRSList;
     }
 
+    public List<Course> displayCourse(String id){
+
+        Cursor cursor = db.rawQuery("select idScr , NameCrs , crsFee from "+TBL_STD_J_CRS+" inner join tbl_course on id_crs_std_j_crs = idScr where id_std_std_j_crs="+id,null);
+        cursor.moveToFirst();
+        List<Course> CRSList = new ArrayList<>();
+        do {
+            Course crs = new Course();
+            crs.setId(cursor.getString(0));
+            crs.setCourseName(cursor.getString(1));
+            crs.setCourseTuition(cursor.getString(2));
+
+            CRSList.add(crs);
+        }while (cursor.moveToNext());
+        return CRSList;
+    }
+
     public List<Term> displayTerm(){
         Cursor cursor = db.rawQuery("SELECT * FROM  "+TBL_TRM,null);
         cursor.moveToFirst();
@@ -240,16 +256,16 @@ public class dbHandler extends SQLiteOpenHelper {
 
         db.insert("tbl_education","name_education",contentValues);
     }
-    public boolean CheckDuplicateEducation(String a){
-        Cursor cursor = db.rawQuery("SELECT name_education FROM  "+TBL_EDU+" where name_education like '"+a+"%'",null);
+    public int CheckDuplicateEducation(String a){
+        Cursor cursor = db.rawQuery("SELECT name_education FROM  "+TBL_EDU+" where name_education='"+a+"'",null);
         cursor.moveToFirst();
-        return cursor.isNull(0);
+        return cursor.getCount();
     }
 
-    public boolean CheckDuplicateregisterdCrs(String idStd,String idCrs ){
-        Cursor cursor = db.rawQuery("SELECT id_id_std_j_crs FROM  "+TBL_STD_J_CRS+" where id_std_std_j_crs="+idStd+" and id_crs_std_j_crs="+idCrs,null);
+    public int CheckDuplicateregisterdCrs(String idStd,String idCrs ){
+        Cursor cursor = db.rawQuery("SELECT * FROM  "+TBL_STD_J_CRS+" where id_std_std_j_crs="+idStd+" and id_crs_std_j_crs="+idCrs,null);
         cursor.moveToFirst();
-        return cursor.isNull(0);
+        return cursor.getCount();
 
     }
 
@@ -286,6 +302,12 @@ public class dbHandler extends SQLiteOpenHelper {
         db.insert(TBL_TRM,"name_term",contentValues);
     }
 
+
+    public int displayRowCountRegisterdCrs(String id){
+        Cursor cursor = db.rawQuery("select idScr , NameCrs , crsFee from "+TBL_STD_J_CRS+" inner join tbl_course on id_crs_std_j_crs = idScr where id_std_std_j_crs="+id,null);
+        cursor.moveToFirst();
+        return cursor.getCount();
+    }
 
     public int displayRowCount(String Table){
         Cursor cursor = db.rawQuery("SELECT * FROM  "+ Table,null);

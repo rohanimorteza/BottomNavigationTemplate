@@ -73,9 +73,15 @@ public class FragmentStudentDetail extends Fragment {
         viewPager = view.findViewById(R.id.vp_in_detail_std_frg);
 
         TabViewPagerAdapter adapter = new TabViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new FragmentStudentDetailRegisteredTuition(),"پرداختی ها");
-        adapter.addFragment(new FragmentStudentDetailRegisteredCrs(),"دوره ها");
+        Bundle b = new Bundle();
+        b.putString("ID",getArguments().get("ID").toString());
+        FragmentStudentDetailRegisteredTuition frgStdTui =new FragmentStudentDetailRegisteredTuition();
+        adapter.addFragment(frgStdTui,"پرداختی ها");
+        frgStdTui.setArguments(b);
 
+        FragmentStudentDetailRegisteredCrs frgStdCrs = new FragmentStudentDetailRegisteredCrs();
+        adapter.addFragment(frgStdCrs,"دوره ها");
+        frgStdCrs.setArguments(b);
 
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
@@ -180,7 +186,7 @@ public class FragmentStudentDetail extends Fragment {
         CrsId=id;
         dbHandler dbh=new dbHandler(c);
         dbh.open();
-        if(dbh.CheckDuplicateregisterdCrs(stdId,CrsId)){
+        if(dbh.CheckDuplicateregisterdCrs(stdId,CrsId)<=0){
             dbh.insertCrsToStd(stdId,CrsId);
             Toast.makeText(c,"ثبت نام انجام شد",Toast.LENGTH_SHORT).show();
 

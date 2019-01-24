@@ -118,8 +118,13 @@ public class NewUserFragment extends Fragment {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , baos);
                 imageInByte = baos.toByteArray();
 
-                //Toast.makeText(getContext(),imageInByte.length+" تصویر؟ ",Toast.LENGTH_LONG).show();
 
+                if(name.getText().length()==0) {
+                    Toast.makeText(getContext(),"نام را وارد کنید",Toast.LENGTH_LONG).show();
+                }
+                if( id_education.equals("1")) {
+                    Toast.makeText(getContext(),"تحصیلات را انتخاب کنبد",Toast.LENGTH_LONG).show();
+                }
 
                 if(name.getText().length()>0 &&  !id_education.equals("1") && imageInByte.length>0 ){
                     dbHandler dbHandler = new dbHandler(getContext());
@@ -130,15 +135,8 @@ public class NewUserFragment extends Fragment {
                     name.getText().clear();
 
                     Toast.makeText(getContext()," ذخیره شد",Toast.LENGTH_LONG).show();
-                    //finish();
                 }
 
-                if(name.getText().length()==0) {
-                    Toast.makeText(getContext(),"نام را وارد کنید",Toast.LENGTH_LONG).show();
-                }
-                if( id_education.equals("1")) {
-                    Toast.makeText(getContext(),"تحصیلات را انتخاب کنبد",Toast.LENGTH_LONG).show();
-                }
             }
         });
 

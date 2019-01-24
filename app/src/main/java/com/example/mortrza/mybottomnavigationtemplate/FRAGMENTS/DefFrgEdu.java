@@ -90,7 +90,7 @@ public class DefFrgEdu extends Fragment {
 
                     dbHandler dbh =new dbHandler(getContext());
                     dbh.open();
-                    if(dbh.CheckDuplicateEducation(unitEdt.getText().toString())){
+                    if(dbh.CheckDuplicateEducation(unitEdt.getText().toString())<=0){
                         dbh.insertEducation(unitEdt.getText().toString());
                         Toast.makeText(getContext(),"ذخیره شد",Toast.LENGTH_LONG).show();
                     }else {

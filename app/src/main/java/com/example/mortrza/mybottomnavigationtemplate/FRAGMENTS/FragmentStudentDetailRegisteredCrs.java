@@ -50,8 +50,8 @@ public class FragmentStudentDetailRegisteredCrs extends Fragment {
         dbh = new dbHandler(getContext());
         dbh.open();
 
-        if(dbh.displayRowCount(TBL_CRS)>0){
-            setupRecycler(dbh.displayCourse());
+        if(dbh.displayRowCountRegisterdCrs(getArguments().get("ID").toString())>0){
+            setupRecycler(dbh.displayCourse(getArguments().get("ID").toString()));
         }
 
         dbh.close();
