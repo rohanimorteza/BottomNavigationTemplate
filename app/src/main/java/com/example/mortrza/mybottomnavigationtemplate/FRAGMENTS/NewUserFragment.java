@@ -210,6 +210,10 @@ public class NewUserFragment extends Fragment {
                         Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent,2);
                     }
+                }else {
+                    mBottomSheetDialog.dismiss();
+                    Intent intent  = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent,2);
                 }
 
             }

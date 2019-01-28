@@ -294,10 +294,11 @@ public class dbHandler extends SQLiteOpenHelper {
         db.insert(TBL_CRS,"nameCrs",contentValues);
     }
 
-    public void insertTrm(String Name , String Year){
+    public void insertTrm(String Name , String Year , String begin){
         ContentValues contentValues = new ContentValues();
         contentValues.put("name_term",Name);
         contentValues.put("year_term",Year);
+        contentValues.put("begin",begin);
 
         db.insert(TBL_TRM,"name_term",contentValues);
     }
