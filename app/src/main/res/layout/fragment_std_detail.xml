@@ -52,6 +52,16 @@
                     android:fontFamily="@font/yekan"
                     android:text="تحصیلات :"
                     />
+                <TextView
+                    android:id="@+id/txt_frg_detail_debt"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/yekan"
+                    android:text="وضعیت شهریه :"
+                    />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab_detail_std"

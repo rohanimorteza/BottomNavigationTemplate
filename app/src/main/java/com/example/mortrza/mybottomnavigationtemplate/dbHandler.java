@@ -158,6 +158,15 @@ public class dbHandler extends SQLiteOpenHelper {
     }
 
 
+    public String Debt(String id){
+
+        Cursor cursor = db.rawQuery("select sum(crsFee) from tbl_std_join_crs inner join tbl_course on id_crs_std_j_crs = idScr where id_std_std_j_crs="+id,null);
+        cursor.moveToFirst();
+
+        return cursor.getString(0);
+
+    }
+
     public Student displayStudent(String id){
 
 

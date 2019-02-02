@@ -41,7 +41,7 @@ public class FragmentStudentDetail extends Fragment {
     static String CrsId;
     ImageView stdimg;
     Student student;
-    TextView name,edu;
+    TextView name,edu,debt;
     static Context c;
     static String stdId;
     TabLayout tabLayout;
@@ -67,6 +67,7 @@ public class FragmentStudentDetail extends Fragment {
         student = new Student();
         name = view.findViewById(R.id.txt_frg_detail_name);
         edu = view.findViewById(R.id.txt_frg_detail_edu);
+        debt = view.findViewById(R.id.txt_frg_detail_debt);
         stdimg =  view.findViewById(R.id.img_frg_detail_avatar);
         setting = view.findViewById(R.id.fab_detail_std);
         tabLayout = view.findViewById(R.id.tabs_in_detail_std_frg);
@@ -93,6 +94,8 @@ public class FragmentStudentDetail extends Fragment {
         dbHandler dbh = new dbHandler(getContext());
         dbh.open();
         student = dbh.displayStudent(stdId);
+        debt.setText("وضعیت بدهی : "+dbh.Debt(stdId));
+
         dbh.close();
 
         byte[] p = student.getImg();
@@ -101,6 +104,7 @@ public class FragmentStudentDetail extends Fragment {
 
         name.setText(name.getText().toString()+" "+student.getName());
         edu.setText(edu.getText().toString()+" "+student.getEducation());
+
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
